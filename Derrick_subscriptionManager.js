@@ -22,7 +22,8 @@
 
     offline : [],
 
-    // Pay Billing Cycle
+    // This function is to bill a selected user subscription based on their date of purchase 
+    // and today's date, and if the user have 'Free trial'
     billingSubscription(username) {
         //Find the user
         const selectedUser = this.users.find(u => u.username == username);
@@ -61,7 +62,7 @@
                 } 
             }
             
-            //Pay the monthly subscription fee
+            //Pay the monthly subscription fee on the same date
             else if (monthDiff >= 2 && dayDiff == 0)
             {
                 const selectedSub = this.subscription.find(s => s.subscription == selectedUser.subscription);
@@ -81,7 +82,7 @@
         }
     },
 
-    // Change Subscription
+    // This function is to change a selected user subscription
     changeSubscription(username, newSubcription){
         //Find the user & subscription
         const selectedUser = this.users.find(u => u.username == username);
@@ -125,7 +126,7 @@
         }
     },
 
-    // New User
+    // This function is to create a new user with or without subscription
     newUser(username, subscription = "None"){
         //Find whether username is taken
         const selectedUser = this.users.find(u => u.username == username);
@@ -165,26 +166,32 @@
         }
     },
 
-    // Play a song (shuffle)
+    // This function is to play 3 songs with or without shuffle (random pick a song) based on
+    // the selected user's subscription
     playSongsWithShuffle(songName, username, shuffle = true){
+        //Find the user & song
         const selectedSong = this.songs.find(s => s.songname == songName);
         const selectedUser = this.users.find(u => u.username == username);
         if (selectedSong && selectedUser)
         {
+            //Check that the user have subscription if they want to turn OFF shuffle
             if (shuffle == false && selectedUser.subscription == "None")
             {
                 shuffle = true;
                 console.log("Shuffle cannot be turned off.");
             }
 
-            //
+            console.log("Now playing " + selectedSong.songname + " by " + selectedSong.artist);
+
+            //Play 3 songs in a row
             let count = 3;
             let currentSong = selectedSong;
             const albumList = setInterval(() => {
                 if (count == 0)
                 {
+                    //Stop the music
                     clearInterval(albumList);
-                    console.log("Stop Music");
+                    console.log("Stop Song");
                     return
                 }
                 else
@@ -192,21 +199,25 @@
                     console.log("Next song")
                     if (shuffle == true)
                     {
+                        //Pick a random song
                         const nextSong = this.songs[Math.floor(Math.random() * this.songs.length)]
-                        console.log(nextSong);
+                        console.log("Now playing " + nextSong.songname + " by " + nextSong.artist);
                     }
                     else
                     {
+                        //Pick a song that is the same as the artist of the selected song
                         const matchingSongs = this.songs.filter(
                             song => song.artist === currentSong.artist
                         );
 
+                        // Get the index of the current song
                         const currentIndex = matchingSongs.indexOf(currentSong);
 
+                        // Get the next song in the artist list
                         const nextSong =
                             matchingSongs[(currentIndex + 1) % matchingSongs.length];
                         
-                        console.log(nextSong);
+                        console.log("Now playing " + nextSong.songname + " by " + nextSong.artist);
 
                         currentSong = nextSong;
                     }
@@ -223,14 +234,18 @@
         }
     },
 
-    // Offline downloads (Need sub)
+    // This function allow the user, with a paid subscription, to download a song to listen
+    // offine
     offlineDownload(songName, username){
+        //Find the user & song
         const selectedSong = this.songs.find(s => s.songname == songName);
         const selectedUser = this.users.find(u => u.username == username);
         if (selectedSong && selectedUser)
         {
+            //Check that the user have a paid subscription
             if (selectedUser.subscription != "None")
             {
+                //Add the song to a offine database
                 this.offline.push({"song": selectedSong.songname, "user": selectedUser.username})
                 console.log("Downloading...");
 
