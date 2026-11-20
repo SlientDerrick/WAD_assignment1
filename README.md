@@ -1,5 +1,5 @@
 # Assignment 1
-This node module, subscriptionManager, is use to handle billing cycle of user subscription, make any changes to user, and check that the user have a paid subscription to use or change a function.
+This node module, subscriptionManager, is use to handle billing cycle of user subscription, make any changes to user, and check that the user have a paid subscription to use or change a function for their music.
 
 To use this node module, 
 1. Use a javascript file (app.js) to call the functions and add a require method inside the javascript file for the node module.
