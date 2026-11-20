@@ -2,8 +2,9 @@
     //Databases
     users : [
         {"username": "derrick12", "subscription": "Student", "date": "2026-03-16", "free": false},
-        {"username": "john63", "subscription": "Individual", "date": "2026-10-17", "free": true},
-        {"username": "free24", "subscription": "None", "date": "None", "free": true},
+        {"username": "secret2", "subscription": "Student", "date": "2026-03-20", "free": false},
+        {"username": "john63", "subscription": "Individual", "date": "2026-10-19", "free":  true},
+        {"username": "free24", "subscription": "None", "date": "None", "free": true}, 
     ],
 
     subscription : [
