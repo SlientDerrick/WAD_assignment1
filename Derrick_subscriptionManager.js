@@ -143,6 +143,7 @@
                     this.users.push(
                         {"username": username, "subscription": subscription, "date": today, "free": true}
                     );
+                    console.log("New User Added");
                     return
                 }
                 else
@@ -157,6 +158,7 @@
                 this.users.push(
                     {"username": username, "subscription": "None", "date": "None", "free": true}
                 );
+                console.log("New User Added");
                 return
             }
         }
